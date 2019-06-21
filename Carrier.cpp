@@ -25,3 +25,8 @@ Carrier::Carrier()
 {
 
 }
+
+Carrier *Carrier::clone() const
+{
+    return( new Carrier( *this ) );
+}

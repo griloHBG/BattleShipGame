@@ -84,3 +84,8 @@ char HydroPlane::getSymbol() const
 {
     return 'H';
 }
+
+HydroPlane* HydroPlane::clone() const
+{
+    return( new HydroPlane( *this ) );
+}

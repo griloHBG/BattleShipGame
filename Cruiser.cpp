@@ -31,3 +31,8 @@ std::string Cruiser::getShipName() const
 {
     return "Cruiser";
 }
+
+Cruiser *Cruiser::clone() const
+{
+    return( new Cruiser( *this ) );
+}

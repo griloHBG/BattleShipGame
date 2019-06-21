@@ -43,6 +43,8 @@ public:
 
     uint8_t operator-(const Ship& otherShip);
 
+    virtual Ship* clone() const = 0;
+
 protected:
     size_t m_size;
 	uint8_t m_goodParts;

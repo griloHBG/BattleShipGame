@@ -15,6 +15,7 @@ public:
     Destroyer(const char sRotationCenter[], ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
+    Destroyer* clone() const override;
 };
 
 

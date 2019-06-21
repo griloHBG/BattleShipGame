@@ -20,6 +20,7 @@ public:
     char getSymbol() const override;
 
     std::string getShipName() const override;
+    HydroPlane* clone() const override;
 };
 
 

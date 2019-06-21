@@ -34,3 +34,8 @@ Submarine::Submarine()
 {
 
 }
+
+Submarine* Submarine::clone() const
+{
+    return( new Submarine( *this ) );
+}

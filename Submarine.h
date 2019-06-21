@@ -24,6 +24,7 @@ public:
     explicit Submarine(const char sRotationCenter[]);
 	char getSymbol() const override;
 	std::string getShipName() const override;
+    Submarine* clone() const override;
 };
 
 #endif /* SUBMARINE_H_ */

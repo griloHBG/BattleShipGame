@@ -15,6 +15,7 @@ public:
     Cruiser(const char sRotationCenter[], ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
+    Cruiser* clone() const override;
 };
 
 

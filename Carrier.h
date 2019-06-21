@@ -14,6 +14,7 @@ public:
     Carrier(Coordinate rotationCenter, ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
+    Carrier* clone() const override;
 };
 
 
