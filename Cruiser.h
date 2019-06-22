@@ -12,10 +12,11 @@ class Cruiser: public LinearShip
 public:
     Cruiser();
     Cruiser(Coordinate rotationCenter, ShipDirection direction);
-    Cruiser(const char sRotationCenter[], ShipDirection direction);
+    Cruiser(const std::string& sRotationCenter, ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
     Cruiser* clone() const override;
+    UnitType getUnitType() const override;
 };
 
 

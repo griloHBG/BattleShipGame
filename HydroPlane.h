@@ -15,12 +15,13 @@ private:
 public:
     HydroPlane();
     HydroPlane(Coordinate rotationCenter, ShipDirection direction);
-    HydroPlane(const char sRotationCenter[], ShipDirection direction);
+    HydroPlane(const std::string& sRotationCenter, ShipDirection direction);
 
     char getSymbol() const override;
 
     std::string getShipName() const override;
     HydroPlane* clone() const override;
+    UnitType getUnitType() const override;
 };
 
 

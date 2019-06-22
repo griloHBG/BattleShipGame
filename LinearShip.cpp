@@ -39,7 +39,7 @@ LinearShip::LinearShip(size_t numCells, Coordinate rotationCenter, ShipDirection
     placeShip(m_rotationCenter, direction);
 }
 
-LinearShip::LinearShip(size_t numCells, const char *srotationCenter, ShipDirection direction)
+LinearShip::LinearShip(size_t numCells, const std::string& srotationCenter, ShipDirection direction)
 : Ship(numCells, srotationCenter, direction)
 {
     placeShip(m_rotationCenter, direction);

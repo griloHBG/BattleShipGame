@@ -21,10 +21,11 @@ class Submarine: public LinearShip
 public:
     explicit Submarine();
 	explicit Submarine(Coordinate rotationCenter);
-    explicit Submarine(const char sRotationCenter[]);
+    explicit Submarine(const std::string& sRotationCenter);
 	char getSymbol() const override;
 	std::string getShipName() const override;
     Submarine* clone() const override;
+    UnitType getUnitType() const override;
 };
 
 #endif /* SUBMARINE_H_ */

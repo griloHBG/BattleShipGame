@@ -230,6 +230,6 @@ Field::Field(const Field& otherField)
 
     for(auto s: otherField.m_ships)
     {
-        // TODO (*this) << s
+        *this << s->clone();
     }
 }

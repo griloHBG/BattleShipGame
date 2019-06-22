@@ -16,7 +16,7 @@ Cruiser::Cruiser(Coordinate rotationCenter, ShipDirection direction)
 
 }
 
-Cruiser::Cruiser(const char *sRotationCenter, ShipDirection direction)
+Cruiser::Cruiser(const std::string& sRotationCenter, ShipDirection direction)
 :LinearShip(4, sRotationCenter, direction)
 {
 
@@ -35,4 +35,9 @@ std::string Cruiser::getShipName() const
 Cruiser *Cruiser::clone() const
 {
     return( new Cruiser( *this ) );
+}
+
+UnitType Cruiser::getUnitType() const
+{
+    return CRUISER;
 }

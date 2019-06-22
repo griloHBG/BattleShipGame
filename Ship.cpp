@@ -111,22 +111,21 @@ const uint8_t Ship::getSize() const
     return m_size;
 }
 
-Ship::Ship(size_t numCells, const char sRotationCenter[], ShipDirection direction)
+Ship::Ship(size_t numCells, const std::string& sRotationCenter, ShipDirection direction)
         : m_goodParts( numCells )
           , m_destroyedParts( 0 )
           , m_direction( direction )
           , m_size(numCells)
           , m_isInitialized(false)
 {
-    std::string s = sRotationCenter;
 
-    char column = toupper(s.at(0));
+    char column = toupper(sRotationCenter.at(0));
 
     if(column >= 'A' && column <= 'N')
     {
         try
         {
-            uint8_t row = std::stoi(s.substr(1));
+            uint8_t row = std::stoi(sRotationCenter.substr(1));
 
             if(row >= 1)
             {

@@ -12,9 +12,11 @@ class Carrier: public LinearShip
 public:
     Carrier();
     Carrier(Coordinate rotationCenter, ShipDirection direction);
+    Carrier(const std::string& sRotationCenter, ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
     Carrier* clone() const override;
+    UnitType getUnitType() const override;
 };
 
 

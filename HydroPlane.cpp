@@ -10,7 +10,7 @@ HydroPlane::HydroPlane(Coordinate rotationCenter, ShipDirection direction)
     placeShip(m_rotationCenter, direction);
 }
 
-HydroPlane::HydroPlane(const char *sRotationCenter, ShipDirection direction)
+HydroPlane::HydroPlane(const std::string& sRotationCenter, ShipDirection direction)
 : Ship(3, sRotationCenter, direction)
 {
     placeShip(m_rotationCenter, direction);
@@ -88,4 +88,9 @@ char HydroPlane::getSymbol() const
 HydroPlane* HydroPlane::clone() const
 {
     return( new HydroPlane( *this ) );
+}
+
+UnitType HydroPlane::getUnitType() const
+{
+    return UnitType::HYDROPLANE;
 }

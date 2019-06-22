@@ -12,10 +12,11 @@ class Destroyer: public LinearShip
 public:
     Destroyer();
     Destroyer(Coordinate rotationCenter, ShipDirection direction);
-    Destroyer(const char sRotationCenter[], ShipDirection direction);
+    Destroyer(const std::string& sRotationCenter, ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
     Destroyer* clone() const override;
+    UnitType getUnitType() const override;
 };
 
 

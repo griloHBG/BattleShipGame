@@ -30,3 +30,14 @@ Carrier *Carrier::clone() const
 {
     return( new Carrier( *this ) );
 }
+
+Carrier::Carrier(const std::string& sRotationCenter, ShipDirection direction)
+: LinearShip(5, sRotationCenter, direction)
+{
+
+}
+
+UnitType Carrier::getUnitType() const
+{
+    return UnitType::CARRIER;
+}

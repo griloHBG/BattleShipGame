@@ -13,6 +13,7 @@
 #include <vector>
 #include <string>
 #include "Coordinate.h"
+#include "ShipType.h"
 
 using ShipCells = std::vector<Coordinate>;
 
@@ -31,11 +32,12 @@ public:
 	//Ship(size_t numCells, Coordinate rotationCenter);
     explicit Ship(size_t numCells);
 	Ship(size_t numCells, Coordinate rotationCenter, ShipDirection direction);
-    Ship(size_t numCells, const char sRotationCenter[], ShipDirection direction);
+    Ship(size_t numCells, const std::string& sRotationCenter, ShipDirection direction);
     virtual ~Ship();
 
-    virtual char getSymbol() const;
+    virtual char getSymbol() const = 0;
     virtual std::string getShipName() const = 0;
+    virtual UnitType getUnitType() const = 0;
 
     const ShipCells placeShip(Coordinate rotationCenter, ShipDirection direction = ShipDirection::NORTH);
     const std::vector<Coordinate> getCells() const;

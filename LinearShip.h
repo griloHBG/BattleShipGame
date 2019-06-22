@@ -12,7 +12,7 @@ class LinearShip: public Ship
 public:
     explicit LinearShip(size_t numCells);
     LinearShip(size_t numCells, Coordinate rotationCenter, ShipDirection direction);
-    LinearShip(size_t numCells, const char* srotationCenter, ShipDirection direction);
+    LinearShip(size_t numCells, const std::string& srotationCenter, ShipDirection direction);
     void setupRemainingShip(ShipDirection direction) override;
 };
 

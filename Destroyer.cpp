@@ -10,7 +10,7 @@ Destroyer::Destroyer(Coordinate rotationCenter, ShipDirection direction)
     placeShip(m_rotationCenter, direction);
 }
 
-Destroyer::Destroyer(const char *sRotationCenter, ShipDirection direction)
+Destroyer::Destroyer(const std::string& sRotationCenter, ShipDirection direction)
 : LinearShip(2, sRotationCenter, direction)
 {
     placeShip(m_rotationCenter, direction);
@@ -35,4 +35,9 @@ std::string Destroyer::getShipName() const
 Destroyer *Destroyer::clone() const
 {
     return( new Destroyer( *this ) );
+}
+
+UnitType Destroyer::getUnitType() const
+{
+    return UnitType::DESTROYER;
 }

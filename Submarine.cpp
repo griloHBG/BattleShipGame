@@ -23,7 +23,7 @@ char Submarine::getSymbol() const
     return 's';
 }
 
-Submarine::Submarine(const char *sRotationCenter)
+Submarine::Submarine(const std::string& sRotationCenter)
 : LinearShip(1, sRotationCenter, ShipDirection::NORTH)
 {
 
@@ -38,4 +38,9 @@ Submarine::Submarine()
 Submarine* Submarine::clone() const
 {
     return( new Submarine( *this ) );
+}
+
+UnitType Submarine::getUnitType() const
+{
+    return UnitType::SUBMARINE;
 }
