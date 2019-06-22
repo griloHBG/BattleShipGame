@@ -423,46 +423,47 @@ int main()
 
                 }
                 else {
+
+                    if (sDirection == "NORTH" || sDirection == "N")
+                    {
+                        direction = ShipDirection::NORTH;
+                    }
+                    else if (sDirection == "EAST" || sDirection == "E")
+                    {
+                        direction = ShipDirection::EAST;
+                    }
+                    else if (sDirection == "SOUTH" || sDirection == "S")
+                    {
+                        direction = ShipDirection::SOUTH;
+                    }
+                    else if (sDirection == "WEST" || sDirection == "W")
+                    {
+                        direction = ShipDirection::WEST;
+                    }
+                    else
+                    {
+                        inputFailed = true;
+
+                        clearScreen();
+
+                        std::cout << "You entered: " << sCommand << " " << sShip << " " << sPosition << " " << sDirection << std::endl
+                                  << std::endl
+                                  << "    These are the only possible directions :" << std::endl
+                                  << std::endl
+                                  << "NORTH (or N) , EAST (or E), SOUTH (or S) , WEST (or W)" << std::endl
+                                  << std::endl;
+
+                        continue;
+                    }
+
                     try{
-
-                        if (sDirection == "NORTH" || sDirection == "N")
-                        {
-                            direction = ShipDirection::NORTH;
-                        }
-                        else if (sDirection == "EAST" || sDirection == "E")
-                        {
-                            direction = ShipDirection::EAST;
-                        }
-                        else if (sDirection == "SOUTH" || sDirection == "S")
-                        {
-                            direction = ShipDirection::SOUTH;
-                        }
-                        else if (sDirection == "WEST" || sDirection == "W")
-                        {
-                            direction = ShipDirection::WEST;
-                        }
-                        else
-                        {
-                            inputFailed = true;
-
-                            clearScreen();
-
-                            std::cout << "You entered: " << sCommand << " " << sShip << " " << sPosition << " " << sDirection << std::endl
-                                      << std::endl
-                                      << "    These are the only possible directions :" << std::endl
-                                      << std::endl
-                                      << "NORTH (or N) , EAST (or E), SOUTH (or S) , WEST (or W)" << std::endl
-                                      << std::endl;
-
-                            continue;
-                        }
 
                         if(ship != nullptr)
                         {
                             delete ship;
                         }
 
-                        if (sShip == "CARRIER")
+                        if (sShip == "CARRIER" || sShip == "CAR")
                         {
                             unitType = UnitType::CARRIER;
                             ship = new Carrier(sPosition, direction);
@@ -472,7 +473,7 @@ int main()
                                 cantUseUnit = true;
                             }
                         }
-                        else if (sShip == "CRUISER")
+                        else if (sShip == "CRUISER" || sShip == "CRU")
                         {
                             unitType = UnitType::CRUISER;
                             ship = new Cruiser(sPosition, direction);
@@ -482,7 +483,7 @@ int main()
                                 cantUseUnit = true;
                             }
                         }
-                        else if (sShip == "HYDRO" || sShip == "HYDROPLPANE")
+                        else if (sShip == "HYDRO" || sShip == "HYDROPLPANE" || sShip == "HYD")
                         {
                             unitType = UnitType::HYDROPLANE;
                             ship = new HydroPlane(sPosition, direction);
@@ -492,7 +493,7 @@ int main()
                                 cantUseUnit = true;
                             }
                         }
-                        else if (sShip == "DESTROYER")
+                        else if (sShip == "DESTROYER" || sShip == "DES")
                         {
                             unitType = UnitType::DESTROYER;
                             ship = new Destroyer(sPosition, direction);
@@ -502,7 +503,7 @@ int main()
                                 cantUseUnit = true;
                             }
                         }
-                        else if (sShip == "SUBMARINE")
+                        else if (sShip == "SUBMARINE" || sShip == "SUB")
                         {
                             unitType = UnitType::SUBMARINE;
                             ship = new Submarine(sPosition);
@@ -522,20 +523,18 @@ int main()
                                                                                                                 << std::endl
                                       << "    You must to address these, and only these, kind of UNITS:"        << std::endl
                                                                                                                 << std::endl
-                                      << "CARRIER , CRUISER , HYDROPLANE (or HYDRO) , DESTROYER , SUBMARINE"    << std::endl
+                                      << "CARRIER (or CAR) , CRUISER (or CRU), HYDROPLANE (or HYDRO or HYD) , DESTROYER (or DES), SUBMARINE (or SUB)"    << std::endl
                                                                                                                 << std::endl;
-
-                            continue;
                         }
 
                         if(cantUseUnit)
                         {
+                            inputFailed = true;
+
                             clearScreen();
 
                             std::cout << "Sir, there is no " << ship->getShipName() << " left for manouver, Sir."   << std::endl
                                                                                                                     << std::endl;
-                            inputFailed = true;
-                            continue;
                         }
                     }
                     catch(std::out_of_range& e)
@@ -638,6 +637,8 @@ int main()
                             {
                                 auxField = Field(*field2);
                             }
+
+                            clearScreen();
 
                             break;
 
