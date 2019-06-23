@@ -12,4 +12,6 @@ add_executable( battleship main.cpp
                 Destroyer.cpp
                 Carrier.cpp
                 HydroPlane.cpp
-        Cruiser.cpp Cruiser.h ShipType.h)
+                Cruiser.cpp
+                General.cpp
+                )
