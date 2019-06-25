@@ -10,6 +10,7 @@
 #include <memory> // make_shared
 #include "ShipType.h"
 #include "General.h"
+#include <random> //random_device, mt19937, uniform_int_distribution
 
 #define clearScreen() system("CLS")
 
@@ -19,6 +20,15 @@ enum CommandType
     REMOVE,
     INVALID
 };
+
+uint8_t randomNumberGenerator(uint8_t low, uint8_t high)
+{
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist(low, high); // distribution in range [1, 6]
+
+    std::cout << dist(rng) << std::endl;
+}
 
 void getAcknowledgement(std::stringstream& ssScreen)
 {
