@@ -135,7 +135,17 @@ void placeShips(General& general, Field* field)
                                                                                                                                         << std::endl
                  << *auxField                                                                                                           << std::endl
                                                                                                                                         << std::endl
+                                                                                                                                        << std::endl
+                 << "To PLACE on the FIELD:             place carrier b5 west"                                                          << std::endl
+                 << "                                   place Destroyer n10 east"                                                       << std::endl
+                 << "                                   place submarine D8 south"                                                       << std::endl
+                                                                                                                                        << std::endl
+                                                                                                                                        << std::endl
+                 << "To REMOVE position on the FIELD:   remove carrier b5"                                                              << std::endl
+                 << "                                   remove DESTROYER n10"                                                           << std::endl
+                 << "                                   remove submarine D8"                                                            << std::endl
                                                                                                                                         << std::endl;
+
         std::cin >> sCommand >> sShip >> sPosition >> sDirection;
 
         std::cin.seekg(0,std::ios::end);
@@ -244,10 +254,12 @@ void placeShips(General& general, Field* field)
 
                     std::cout << "You entered: " << sCommand << " " << sShip << " " << sPosition << " " << sDirection  << std::endl
                               << std::endl
-                              << "    You must to address these, and only these, kind of UNITS:"        << std::endl
+                              << "    You must address to these, and only these, kind of UNITS:"        << std::endl
                               << std::endl
                               << "CARRIER (or CAR) , CRUISER (or CRU), HYDROPLANE (or HYDRO or HYD) , DESTROYER (or DES), SUBMARINE (or SUB)"    << std::endl
                               << std::endl;
+
+                    continue;
                 }
 
                 ship = general.makeShip(unitType, sPosition, direction);
