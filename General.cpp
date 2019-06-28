@@ -107,7 +107,7 @@ Ship* General::makeShip(const UnitType &unitType, const Coordinate& position, co
 {
     Ship* resultShip = nullptr;
 
-    if(*this - unitType >= 0)
+    if(getRemaining(unitType) >= 1)
     {
         switch (unitType)
         {
