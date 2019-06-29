@@ -146,3 +146,8 @@ Ship::Ship(size_t numCells, const std::string& sRotationCenter, ShipDirection di
         throw std::out_of_range("Column must be a single letter!");
     }
 }
+
+ShipDirection Ship::getShipDirection() const
+{
+    return this->m_direction;
+}

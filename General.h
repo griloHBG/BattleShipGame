@@ -27,6 +27,12 @@ private:
     int tryUseUnit(uint8_t remainingUnit);
 
 public:
+    const uint8_t m_MAXCarrier      = 1;
+    const uint8_t m_MAXCruiser      = 2;
+    const uint8_t m_MAXHydroPlane   = 3;
+    const uint8_t m_MAXDestroyer    = 4;
+    const uint8_t m_MAXSubmarine    = 5;
+
     General(const std::string& name, const std::string& city);
     std::string getName()const;
     std::string getCountry() const;
@@ -37,6 +43,7 @@ public:
     Ship* makeShip(const UnitType& unitType, const std::string& sPosition, const ShipDirection& direction);
 
     int operator-(const UnitType& unitType);
+    int operator+(const UnitType& unitType);
     friend std::ostream& operator<<(std::ostream& out, const General& general);
 };
 

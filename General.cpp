@@ -51,33 +51,70 @@ std::string General::getName() const
 
 int General::operator-(const UnitType& unitType)
 {
+    int* result;
+
+    switch(unitType)
+    {
+        case UnitType::CARRIER:
+            result = (int*)&m_remainingCarrier;
+            break;
+        case UnitType::CRUISER:
+            result = (int*)&m_remainingCruiser;
+            break;
+        case UnitType::HYDROPLANE:
+            result = (int*)&m_remainingHydroPlane;
+            break;
+        case UnitType::DESTROYER:
+            result = (int*)&m_remainingDestroyer;
+            break;
+        case UnitType::SUBMARINE:
+            result = (int*)&m_remainingSubmarine;
+            break;
+        default:
+            //should not happen
+            result = nullptr;
+    }
+
+    *result = *result -1;
+
+    if(*result < 0)
+    {
+        *result = *result + 1;
+        throw std::out_of_range("This UNIT (" + std::to_string(unitType) + ")couldn't be used!");
+    }
+
+    return *result;
+}
+
+int General::operator+(const UnitType &unitType)
+{
     int result = -1;
 
     switch(unitType)
     {
         case UnitType::CARRIER:
-            result = (--m_remainingCarrier);
+            if(m_remainingCarrier + 1 <= m_MAXCarrier)
+                result = (++m_remainingCarrier);
             break;
         case UnitType::CRUISER:
-            result = (--m_remainingCruiser);
+            if(m_remainingCruiser + 1 <= m_MAXCruiser)
+                result = (++m_remainingCruiser);
             break;
         case UnitType::HYDROPLANE:
-            result = (--m_remainingHydroPlane);
+            if(m_remainingHydroPlane + 1 <= m_MAXHydroPlane)
+            result = (++m_remainingHydroPlane);
             break;
         case UnitType::DESTROYER:
-            result = (--m_remainingDestroyer);
+            if(m_remainingDestroyer + 1 <= m_MAXDestroyer)
+            result = (++m_remainingDestroyer);
             break;
         case UnitType::SUBMARINE:
-            result = (--m_remainingSubmarine);
+            if(m_remainingSubmarine + 1 <= m_MAXSubmarine)
+            result = (++m_remainingSubmarine);
             break;
         default:
             //should not happen
             result = -1;
-    }
-
-    if(result < 0)
-    {
-        throw std::out_of_range("This UNIT (" + std::to_string(unitType) + ")couldn't be used!");
     }
 
     return result;

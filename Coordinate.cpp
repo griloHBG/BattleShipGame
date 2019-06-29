@@ -63,7 +63,11 @@ std::ostream& operator<<(std::ostream& out, const Coordinate& coordinate)
 
 std::string Coordinate::toString() const
 {
-    return std::string("( ").append(std::to_string(at(ROW))).append(" , ").append(std::to_string(at(COL))).append(" )");
+    std::stringstream ss;
+
+    ss << static_cast<char>(at(COL) + 'A') << static_cast<int>(at(ROW) + 1);
+
+    return ss.str();
 }
 
 Coordinate::Coordinate()

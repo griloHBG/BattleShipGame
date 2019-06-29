@@ -73,6 +73,7 @@ void getAcknowledgement(std::stringstream& ssScreen)
     }while(playerInput != "ack" && playerInput != "ACK");
 }
 
+//doesn't work!
 std::ostream& operator<<(std::ostream& out, const UnitType& unitType)
 {
     switch(unitType)
@@ -129,7 +130,7 @@ void confirmPassword(std::stringstream& ssScreen, const std::string& password)
 
 }
 
-std::string getYesOrNo(std::stringstream& ssScreen, const std::string& password)
+bool getYesOrNo(std::stringstream& ssScreen)
 {
     std::string playerInput;
     bool firstTime = true;
@@ -156,16 +157,37 @@ std::string getYesOrNo(std::stringstream& ssScreen, const std::string& password)
 
     }while(playerInput != "YES" && playerInput != "NO");
 
-    std::cout << "OK!" << std::endl;
-    std::cout << std::endl;
-    std::cout << "Press any key to continue..." << std::endl;
-    getch();
-
-    return playerInput.c_str();
+    return (playerInput == "YES");
 
 }
 
-void placeShips(General& general, Field* field, bool doRandomizeUNITS)
+std::string unitType_to_string(UnitType unitType)
+{
+    std::string result;
+
+    switch(unitType)
+    {
+        case CARRIER:
+            result= "CARRIER";
+            break;
+        case CRUISER:
+            result= "CRUISER";
+            break;
+        case HYDROPLANE:
+            result= "HYDRO PLANE";
+            break;
+        case DESTROYER:
+            result= "DESTROYER";
+            break;
+        case SUBMARINE:
+            result= "SUBMARINE";
+            break;
+    }
+
+    return result;
+}
+
+void placeUnits(General &general, Field* field, bool doRandomizeUNITS)
 {
     if(!doRandomizeUNITS)
     {
@@ -215,15 +237,11 @@ void placeShips(General& general, Field* field, bool doRandomizeUNITS)
                       << "                                   remove submarine D8" << std::endl
                       << std::endl;
 
-            std::cin >> sCommand >> sShip >> sPosition >> sDirection;
-
-            std::cin.seekg(0, std::ios::end);
-            std::cin.clear();
+            std::cin >> sCommand >> sShip >> sPosition;
 
             std::transform(sCommand.begin(), sCommand.end(), sCommand.begin(), ::toupper);
             std::transform(sPosition.begin(), sPosition.end(), sPosition.begin(), ::toupper);
             std::transform(sShip.begin(), sShip.end(), sShip.begin(), ::toupper);
-            std::transform(sDirection.begin(), sDirection.end(), sDirection.begin(), ::toupper);
 
             if (sCommand == "PLACE")
             {
@@ -255,9 +273,77 @@ void placeShips(General& general, Field* field, bool doRandomizeUNITS)
             if (command == CommandType::REMOVE)
             {
 
+                if (ship != nullptr)
+                {
+                    delete ship;
+                }
+
+                if (sShip == "CARRIER" || sShip == "CAR")
+                {
+                    unitType = UnitType::CARRIER;
+                }
+                else if (sShip == "CRUISER" || sShip == "CRU")
+                {
+                    unitType = UnitType::CRUISER;
+                }
+                else if (sShip == "HYDRO" || sShip == "HYDROPLANE" || sShip == "HYD")
+                {
+                    unitType = UnitType::HYDROPLANE;
+                }
+                else if (sShip == "DESTROYER" || sShip == "DES")
+                {
+                    unitType = UnitType::DESTROYER;
+                }
+                else if (sShip == "SUBMARINE" || sShip == "SUB")
+                {
+                    unitType = UnitType::SUBMARINE;
+                }
+                else
+                {
+                    inputFailed = true;
+
+                    clearScreen();
+
+                    std::cout << "You entered: " << sCommand << " " << sShip << " " << sPosition << std::endl
+                              << std::endl
+                              << "    You must address to these, and only these, kind of UNITS:" << std::endl
+                              << std::endl
+                              << "CARRIER (or CAR) , CRUISER (or CRU), HYDROPLANE (or HYDRO or HYD) , DESTROYER (or DES), SUBMARINE (or SUB)"
+                              << std::endl
+                              << std::endl;
+
+                    continue;
+                }
+
+                ship = field->removeUnit(unitType, sPosition);
+
+                clearScreen();
+
+                if(ship != nullptr)
+                {
+                    std::cout << "The " << ship->getShipName() << " that was at " << Field::string_to_Coordinate(sPosition) << " was " << "successfully removed, Sir!" << std::endl << std::endl;
+
+                    general + unitType;
+
+                    delete auxField;
+
+                    auxField = new Field(*field);
+                }
+                else
+                {
+                    std::cout   << "There is no " << unitType_to_string(unitType) << " at " << sPosition << ", Sir!" << std::endl
+                                << std::endl;
+                }
+
             }
             else
             {
+                std::cin >> sDirection;
+
+                std::transform(sDirection.begin(), sDirection.end(), sDirection.begin(), ::toupper);
+
+                std::cin.seekg(0, std::ios::end);
+                std::cin.clear();
 
                 if (sDirection == "NORTH" || sDirection == "N")
                 {
@@ -308,7 +394,7 @@ void placeShips(General& general, Field* field, bool doRandomizeUNITS)
                     {
                         unitType = UnitType::CRUISER;
                     }
-                    else if (sShip == "HYDRO" || sShip == "HYDROPLPANE" || sShip == "HYD")
+                    else if (sShip == "HYDRO" || sShip == "HYDROPLANE" || sShip == "HYD")
                     {
                         unitType = UnitType::HYDROPLANE;
                     }
@@ -476,6 +562,10 @@ void placeShips(General& general, Field* field, bool doRandomizeUNITS)
         Coordinate position(randomNumberGenerator(0,13), randomNumberGenerator(0,13));
         Ship *ship = nullptr;
         ShipAppendResult appendResult;
+        std::stringstream ssScreen;
+        std::string strShipDirection;
+
+        Field* auxField;
 
         for(UnitType unitType = UnitType::CARRIER; unitType >= UnitType::SUBMARINE ;unitType = UnitType(unitType - 1))
         {
@@ -483,22 +573,59 @@ void placeShips(General& general, Field* field, bool doRandomizeUNITS)
             {
                 do
                 {
-                    if (ship != nullptr)
+
+                    ssScreen.str(std::string());
+
+                    auxField = new Field(*field);
+
+                    do
                     {
-                        delete ship;
+                        if (ship != nullptr)
+                        {
+                            delete ship;
+                        }
+
+                        position = Coordinate(randomNumberGenerator(0, 13), randomNumberGenerator(0, 13));
+
+                        ship = general.makeShip(unitType, position,
+                                                static_cast<ShipDirection>(randomNumberGenerator(0, 3)));
+
+                        appendResult = *auxField << ship->clone();
+
+                    }
+                    while (appendResult != ShipAppendResult::APPENDED);
+
+                    switch(ship->getShipDirection())
+                    {
+                        case ShipDirection::NORTH:
+                            strShipDirection = "NORTH";
+                            break;
+                        case ShipDirection::EAST:
+                            strShipDirection = "EAST";
+                            break;
+                        case ShipDirection::SOUTH:
+                            strShipDirection = "SOUTH";
+                            break;
+                        case ShipDirection::WEST:
+                            strShipDirection = "WEST";
+                            break;
                     }
 
-                    position = Coordinate(randomNumberGenerator(0,13), randomNumberGenerator(0,13));
+                    ssScreen << "GENERAL " << general << " our Intelligence Agency recommended us" << std::endl
+                             << "to place this " << ship->getShipName() << " in (" << ship->getRotationCenter() << " , " << strShipDirection
+                             << ") as showed in the map bellow, Sir:" << std::endl
+                             << std::endl
+                             << "Would you like to follow their recommendation, Sir?" << std::endl;
 
-                    ship = general.makeShip(unitType, position,
-                                            static_cast<ShipDirection>(randomNumberGenerator(0, 3)));
+                    ssScreen << *auxField;
 
-                    appendResult = *field << ship->clone();
 
-                }
-                while (appendResult != ShipAppendResult::APPENDED);
+                }while(getYesOrNo(ssScreen) == false);
+
+                field = new Field(*auxField);
 
                 general - unitType;
+
             }while( general.getRemaining(unitType) > 0 );
 
         }
@@ -717,7 +844,7 @@ int main()
         ssScreen << " Now, the next step is to place your UNITS in the field"   << std::endl
                                                                                 << std::endl
                  << "           GENERAL " << general2 << " first."              << std::endl
-                 << "Please enter your password to unlock your TACTICS SCREEN"  << std::endl
+                 << "Please enter your password to unlock your TACTICS SCREEN, Sir"  << std::endl
                                                                                 << std::endl << std::endl;
 
     confirmPassword(ssScreen, password2);
@@ -729,9 +856,9 @@ int main()
     *auxField << new HydroPlane("B5", ShipDirection::SOUTH);
 
         ssScreen << "It's time to make your path to the victory, GENERAL " << general2 << "!"         << std::endl
-                 << "         Here is the field for your UNITS."                                << std::endl
+                 << "         Here is the field for your UNITS, Sir"                                << std::endl
                  << "   You need to specify the central coordinates of"                         << std::endl
-                 << "your UNITS and the direction they will be pointed to."                     << std::endl
+                 << "your UNITS and the direction they will be pointed to, Sir"                     << std::endl
                                                                                                 << std::endl
                  << "You must command your ship with a column line instruction"                 << std::endl
                  << "E.g.: a DESTROYER in D13 WEST and a HYDRO PLANE B5 SOUTH"                  << std::endl
@@ -759,40 +886,91 @@ int main()
     ssScreen.str(std::string());
     clearScreen();
 
-    auxField = new Field();
-
     Field* field1 = new Field();
-    Field* field2 = new Field();
 
-    ssScreen << "GENERAL " << general1 << ", do you want to FULLY randomize your UNITS, Sir?"   << std::endl
+    ssScreen    << "GENERAL " << general1 << ", our Intelligence Agency is totally available"   << std::endl
+                << "to give you all their support with respect to place our units in the"       << std::endl
+                << "battlefield, Sir."                                                          << std::endl
+                                                                                                << std::endl
+                << "Would you like to have access to their recommendations, Sir?"               << std::endl
                                                                                                 << std::endl;
-    if(getYesOrNo(ssScreen, password1) == "YES")
+
+    if(getYesOrNo(ssScreen))
     {
-        placeShips(general1, field1, true);
+        placeUnits(general1, field1, true);
 
         std::cout << *field1;
     }
     else
     {
-        placeShips(general1, field1, false);
+        ssScreen.str(std::string());
+
+        placeUnits(general1, field1, false);
+
     }
 
 
     ssScreen.str(std::string());
-    //clearScreen();
+    clearScreen();
 
-    ssScreen << "GENERAL " << general2 << ", do you want to FULLY randomize your UNITS, Sir?"   << std::endl
-             << std::endl;
+    ssScreen << "             GENERAL " << general1 << "'s turn."              << std::endl
+             << "Please enter your password to unlock your TACTICS SCREEN, Sir"  << std::endl
+             << std::endl << std::endl;
 
-    if(getYesOrNo(ssScreen, password2) == "YES")
+    confirmPassword(ssScreen, password1);
+
+    ssScreen.str(std::string());
+    clearScreen();
+
+    ssScreen << "It's time to make your path to the victory, GENERAL " << general1 << "!"         << std::endl
+             << "         Here is the field for your UNITS."                                << std::endl
+             << "   You need to specify the central coordinates of"                         << std::endl
+             << "your UNITS and the direction they will be pointed to."                     << std::endl
+             << std::endl
+             << "You must command your ship with a column line instruction"                 << std::endl
+             << "E.g.: a DESTROYER in D13 WEST and a HYDRO PLANE B5 SOUTH"                  << std::endl
+             << "              will be placed as follows:"                                  << std::endl
+             << std::endl
+             << *auxField                                                                   << std::endl
+             << std::endl
+             << "Now, GENERAL " << general1 << ", you will send position"                         << std::endl
+             << "             instructions to your UNITS."                                  << std::endl
+             << std::endl
+             << "Give instructions like (note that commands ARE NOT case sensitive):"       << std::endl
+             << std::endl
+             << std::endl
+             << "To PLACE on the FIELD:             place carrier b5 west"                  << std::endl
+             << "                                   place Destroyer n10 east"               << std::endl
+             << "                                   place submarine D8 south"               << std::endl
+             << std::endl
+             << std::endl
+             << "To REMOVE position on the FIELD:   remove carrier b5"                      << std::endl
+             << "                                   remove DESTROYER n10"                   << std::endl
+             << "                                   remove submarine D8"                    << std::endl;
+
+    getAcknowledgement(ssScreen);
+
+    ssScreen.str(std::string());
+    clearScreen();
+
+    Field* field2 = new Field();
+
+    ssScreen    << "GENERAL " << general1 << ", our Intelligence Agency is totally available"   << std::endl
+                << "to give you all their support with respect to place our units in the"       << std::endl
+                << "battlefield, Sir."                                                          << std::endl
+                << std::endl
+                << "Would you like to have access to their recommendations, Sir?"               << std::endl
+                << std::endl;
+
+    if(getYesOrNo(ssScreen))
     {
-        placeShips(general2, field2, true);
+        placeUnits(general2, field2, true);
 
         std::cout << *field2;
     }
     else
     {
-        placeShips(general2, field2, false);
+        placeUnits(general2, field2, false);
     }
 
     getAcknowledgement(ssScreen);

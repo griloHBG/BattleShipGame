@@ -23,6 +23,12 @@ enum ShipAppendResult
     NOT_APPENDED_OUT_OF_BOUNDS
 };
 
+enum ShipRemoveResult {
+    REMOVED,
+    NOT_REMOVED_WRONG_SHIP,
+    NOT_REMOVED_OUT_OF_BOUNDS
+};
+
 class Field
 {
 
@@ -46,6 +52,11 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Field& field);
     std::string testShipPosition(Ship* ship);
     ShipAppendResult operator<<(Ship* ship);
+
+    Ship* removeUnit(const UnitType unitType, const std::string& sPosition);
+    Ship* removeUnit(const UnitType unitType, const Coordinate position);
+
+    static Coordinate string_to_Coordinate(const std::string sPosition);
 };
 
 #endif /* FIELD_H_ */

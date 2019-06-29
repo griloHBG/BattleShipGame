@@ -38,6 +38,7 @@ public:
     virtual char getSymbol() const = 0;
     virtual std::string getShipName() const = 0;
     virtual UnitType getUnitType() const = 0;
+    ShipDirection getShipDirection() const;
 
     const ShipCells placeShip(Coordinate rotationCenter, ShipDirection direction = ShipDirection::NORTH);
     const std::vector<Coordinate> getCells() const;
