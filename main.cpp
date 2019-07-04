@@ -68,6 +68,9 @@ void getAcknowledgement(std::stringstream& ssScreen)
         std::cout << "ACKNOWLEDGEMENT: " << std::endl;
         std::cin >> playerInput;
 
+        std::cin.seekg(0, std::ios::end);
+        std::cin.clear();
+
         clearScreen();
 
     }while(playerInput != "ack" && playerInput != "ACK");
@@ -121,6 +124,9 @@ void confirmPassword(std::stringstream& ssScreen, const std::string& password)
         std::cout << "PASSWORD: " << std::endl;
         std::cin >> playerInput;
 
+        std::cin.seekg(0, std::ios::end);
+        std::cin.clear();
+
         clearScreen();
 
     }while(playerInput != password);
@@ -152,6 +158,9 @@ bool getYesOrNo(std::stringstream& ssScreen)
         std::cout << std::endl;
         std::cout << "ANSWER: " << std::endl;
         std::cin >> playerInput;
+
+        std::cin.seekg(0, std::ios::end);
+        std::cin.clear();
 
         clearScreen();
 
