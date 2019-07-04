@@ -36,6 +36,8 @@ public:
     General(const std::string& name, const std::string& city);
     std::string getName()const;
     std::string getCountry() const;
+    void setName(const std::string& name);
+    void setCountry(const std::string& country);
     int getRemaining(UnitType unitType) const;
     int getSumRemaining() const;
 

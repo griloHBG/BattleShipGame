@@ -86,6 +86,16 @@ int General::operator-(const UnitType& unitType)
     return *result;
 }
 
+void General::setName(const std::string &name)
+{
+    m_name = name;
+}
+
+void General::setCountry(const std::string& country)
+{
+    m_country = country;
+}
+
 int General::operator+(const UnitType &unitType)
 {
     int result = -1;
