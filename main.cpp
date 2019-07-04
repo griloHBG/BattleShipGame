@@ -74,6 +74,7 @@ void getAcknowledgement(std::stringstream& ssScreen)
 }
 
 //doesn't work!
+/*
 std::ostream& operator<<(std::ostream& out, const UnitType& unitType)
 {
     switch(unitType)
@@ -97,6 +98,7 @@ std::ostream& operator<<(std::ostream& out, const UnitType& unitType)
 
     return out;
 }
+ */
 
 void confirmPassword(std::stringstream& ssScreen, const std::string& password)
 {
