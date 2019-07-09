@@ -1,0 +1,112 @@
+@startuml
+
+abstract class Ship {
+    +Ship()
+    +placeShip()
+    +getCells()
+    +geRtotationCenter()
+    +operator-()
+    +{abstract} getSymbol()
+    +{abstract} getShipName()
+    +{abstract} getShipDirection()
+    +{abstract}clone()
+
+    #m_size
+	#m_goodParts
+	#m_destroyedParts
+    #m_cells
+    #m_rotationCenter
+    #m_direction
+
+    #{abstract}setupRemainingShip()
+    #verifyNumCells()
+    #getSize()
+    -m_isInitialized
+}
+
+class HydroPlane {
+    -setupRemainingShip()
+
+    +HydroPlane()
+    +getSymbol()
+    +getShipName()
+    +clone()
+    +getUnitType()
+}
+abstract class LinearShip {
+    +LinearShip()
+    +setupRemainingShip()
+}
+
+class Carrier {
+    +Carrier()
+    +getSymbol()
+    +getShipName()
+    +clone()
+    +getUnitType()
+}
+class Cruiser {
+    +Cruiser()
+    +getSymbol()
+    +getShipName()
+    +clone()
+    +getUnitType()
+}
+class Destroyer {
+   +Destroyer()
+   +getSymbol()
+   +getShipName()
+   +clone()
+   +getUnitType()
+}
+class Submarine {
+   +Submarine()
+   +getSymbol()
+   +getShipName()
+   +clone()
+   +getUnitType()
+}
+
+Ship <|-- LinearShip
+
+LinearShip <|-- Carrier
+LinearShip <|-- Cruiser
+LinearShip <|-- Destroyer
+LinearShip <|-- Submarine
+
+Ship <|-- HydroPlane
+
+enum ShipDirection {
+    NORTH
+    EAST
+    SOUTH
+    WEST
+    UNDEFINED
+}
+
+enum ShipAppendResult {
+    APPENDED
+    NOT_APPENDED_TOO_CLOSE
+    NOT_APPENDED_OUT_OF_BOUNDS
+}
+
+class Field {
+    -m_grid
+    -m_ships
+    -toString()
+    -at()
+    -boundCheck()
+    +Field()
+    +{abstract}Field()
+    +const ROWS = 14
+    +const COLS = 14
+    +<<friend>> operator<<()
+    +testShipPosition()
+    +operator<<()
+    +removeUnit()
+    +{static}string_to_Coordinate()
+}
+
+Field "1" *- "15" Ship : " m_ships\t"
+
+@enduml
