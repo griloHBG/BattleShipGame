@@ -5,21 +5,20 @@
 #include "Destroyer.h"
 
 Destroyer::Destroyer(Coordinate rotationCenter, ShipDirection direction)
-: LinearShip(2, rotationCenter, direction)
+    : LinearShip(2, rotationCenter, direction)
 {
     placeShip(m_rotationCenter, direction);
 }
 
-Destroyer::Destroyer(const std::string& sRotationCenter, ShipDirection direction)
-: LinearShip(2, sRotationCenter, direction)
+Destroyer::Destroyer(const std::string &sRotationCenter, ShipDirection direction)
+    : LinearShip(2, sRotationCenter, direction)
 {
     placeShip(m_rotationCenter, direction);
 }
 
 Destroyer::Destroyer()
-:LinearShip(2)
+    : LinearShip(2)
 {
-
 }
 
 char Destroyer::getSymbol() const
@@ -34,7 +33,7 @@ std::string Destroyer::getShipName() const
 
 Destroyer *Destroyer::clone() const
 {
-    return( new Destroyer( *this ) );
+    return (new Destroyer(*this));
 }
 
 UnitType Destroyer::getUnitType() const

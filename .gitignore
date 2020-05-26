@@ -13,6 +13,7 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+.vscode
 
 # Generated files
 .idea/**/contentModel.xml
@@ -40,6 +41,8 @@
 
 # CMake
 cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
 
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml

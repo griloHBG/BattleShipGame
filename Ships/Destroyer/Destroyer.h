@@ -5,19 +5,18 @@
 #ifndef BATTLESHIP_DESTROYER_H
 #define BATTLESHIP_DESTROYER_H
 
-#include "LinearShip.h"
+#include "../LinearShip/LinearShip.h"
 
-class Destroyer: public LinearShip
+class Destroyer : public LinearShip
 {
 public:
     Destroyer();
     Destroyer(Coordinate rotationCenter, ShipDirection direction);
-    Destroyer(const std::string& sRotationCenter, ShipDirection direction);
+    Destroyer(const std::string &sRotationCenter, ShipDirection direction);
     char getSymbol() const override;
     std::string getShipName() const override;
-    Destroyer* clone() const override;
+    Destroyer *clone() const override;
     UnitType getUnitType() const override;
 };
-
 
 #endif //BATTLESHIP_DESTROYER_H
