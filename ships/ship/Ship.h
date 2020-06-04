@@ -12,27 +12,27 @@
 #include <array>
 #include <vector>
 #include <string>
-#include "Coordinate.h"
-#include "ShipType.h"
+#include "../../coordinate/Coordinate.h"
+#include "../ShipType.h"
 
 using ShipCells = std::vector<Coordinate>;
 
 enum ShipDirection
 {
-	NORTH,
-	EAST,
-	SOUTH,
-	WEST,
-	UNDEFINED
+    NORTH,
+    EAST,
+    SOUTH,
+    WEST,
+    UNDEFINED
 };
 
 class Ship
 {
 public:
-	//Ship(size_t numCells, Coordinate rotationCenter);
+    //Ship(size_t numCells, Coordinate rotationCenter);
     explicit Ship(size_t numCells);
-	Ship(size_t numCells, Coordinate rotationCenter, ShipDirection direction);
-    Ship(size_t numCells, const std::string& sRotationCenter, ShipDirection direction);
+    Ship(size_t numCells, Coordinate rotationCenter, ShipDirection direction);
+    Ship(size_t numCells, const std::string &sRotationCenter, ShipDirection direction);
     virtual ~Ship();
 
     virtual char getSymbol() const = 0;
@@ -44,21 +44,21 @@ public:
     const std::vector<Coordinate> getCells() const;
     const Coordinate getRotationCenter() const;
 
-    uint8_t operator-(const Ship& otherShip);
+    uint8_t operator-(const Ship &otherShip);
 
-    virtual Ship* clone() const = 0;
+    virtual Ship *clone() const = 0;
 
 protected:
     size_t m_size;
-	uint8_t m_goodParts;
-	uint8_t m_destroyedParts;
+    uint8_t m_goodParts;
+    uint8_t m_destroyedParts;
     ShipCells m_cells;
     Coordinate m_rotationCenter;
     ShipDirection m_direction;
 
     virtual void setupRemainingShip(ShipDirection direction) = 0;
 
-	bool verifyNumCells() const;
+    bool verifyNumCells() const;
     const uint8_t getSize() const;
 
 private:

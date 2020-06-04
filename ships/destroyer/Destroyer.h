@@ -5,7 +5,7 @@
 #ifndef BATTLESHIP_DESTROYER_H
 #define BATTLESHIP_DESTROYER_H
 
-#include "../LinearShip/LinearShip.h"
+#include "../linearShip/LinearShip.h"
 
 class Destroyer : public LinearShip
 {

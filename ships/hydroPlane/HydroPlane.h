@@ -5,9 +5,9 @@
 #ifndef BATTLESHIP_HYDROPLANE_H
 #define BATTLESHIP_HYDROPLANE_H
 
-#include "Ship.h"
+#include "../ship/Ship.h"
 
-class HydroPlane: public Ship
+class HydroPlane : public Ship
 {
 private:
     void setupRemainingShip(ShipDirection direction) override;
@@ -15,14 +15,13 @@ private:
 public:
     HydroPlane();
     HydroPlane(Coordinate rotationCenter, ShipDirection direction);
-    HydroPlane(const std::string& sRotationCenter, ShipDirection direction);
+    HydroPlane(const std::string &sRotationCenter, ShipDirection direction);
 
     char getSymbol() const override;
 
     std::string getShipName() const override;
-    HydroPlane* clone() const override;
+    HydroPlane *clone() const override;
     UnitType getUnitType() const override;
 };
-
 
 #endif //BATTLESHIP_HYDROPLANE_H
